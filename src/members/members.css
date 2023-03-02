@@ -1,0 +1,107 @@
+.container{
+    width: 100%;
+    border-top: 2px solid rgb(234, 226, 226);
+    display: flex;
+    margin-top: 10px;
+}
+.menu_bar{
+    width: 25%;
+    height: calc(100vh - 72px);
+    max-width: 300px;
+    border-right: solid;
+    background-color: rgb(243, 243, 245);
+}
+.add_q_button{
+    width: 80px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 8px 10px;
+    font-size: medium;
+    font-weight: 550;
+    border-radius: 10px;
+    background-color: rgb(254, 212, 158,0.8);
+}
+.add_q_button:hover{
+    width: 85px;
+    height: 47px;
+    cursor: pointer;
+    box-shadow: 0px 10px 10px -5px;
+    color: gray;
+    background-color: rgb(255, 202, 133);
+}
+.menu_bottom{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+.menu_bottom .add_questionnaire_icon{
+    width: 24px;
+    height: 24px;
+}
+.menu{
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid rgb(255, 255, 255);
+}
+.menu:hover{
+    font-weight: 700;
+    background-color: rgb(255, 245, 62);
+}
+.main{
+    flex: 1;
+    height: calc(100vh - 102px);
+    /* padding: 15px; */
+}
+.title{
+    margin: 10px;
+    font-weight: 700;
+    font-size: 35px;
+    height: 50px;
+}
+.sticker{
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+    background-color: cadetblue;
+}
+.info{
+    margin: 10px;
+}
+.add_questionnaire_icon{
+    background-image: url("../picture/add_icon.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 32px;
+    height: 32px;
+}
+.add_questionnaire_container{
+    display: flex;
+    flex-wrap: wrap;
+}
+.add_questionnaire{
+    width: 180px;
+    height: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    font-size: 20px;
+    background-color: rgb(254, 212, 158,0.8);
+    border: 1px solid rgb(252, 190, 110);
+    border-radius: 10px;
+}
+.add_questionnaire:hover{
+    font-weight: 700;
+    background-color: rgb(255, 202, 133);
+    border: 1px solid rgb(246, 155, 52);
+    box-shadow: 0px 10px 10px -5px;
+    color: gray;
+    cursor: pointer;
+}

@@ -1,0 +1,109 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+.nav{
+    height: 50px;
+    width: auto;
+    padding-top: 20px;
+    display: flex;
+}
+.logo{
+    width: 15%;
+    min-width: 100px;
+    margin: 0 0 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(98, 98, 236);
+    cursor: pointer;
+}
+.space{
+    flex: 1;
+}
+.loginBar,.signUpBar{
+    width: 80px;
+    margin: 0 10px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loginBar{
+    border:2px #FFAC55 solid;
+}
+.loginBar:hover,.signUpBar:hover{
+    cursor: pointer;
+    background-color:#FFAC55 ;
+}
+.login_background{
+    display:grid;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 10;
+}
+.login{
+    width: 330px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #FFFFFF;
+}
+.logTop{
+    width: 100%;
+    height: 35px;
+    background-color: #34f7a9;
+}
+.closeBar{
+    width: 25px;
+    height: 25px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image:url("../picture/close.png");
+    background-position: center;
+    position: relative;
+    right: -90%;
+    top: 5px;
+    cursor: pointer;
+}
+.logtitle{
+    margin-top: 20px;
+}
+.logInput{
+    width: 80%;
+    height: 25px;
+    margin: 15px 0 15px 0 ;
+    padding: 5px;
+}
+.changeLogSign{
+    text-align: center;
+    margin: 30px 0 10px 0;
+}
+.changetext{
+    color: rgb(5, 220, 149);
+    cursor: pointer;
+}
+.changetext:hover{
+    font-weight: 700;
+}
+

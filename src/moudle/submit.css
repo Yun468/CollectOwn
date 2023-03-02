@@ -1,0 +1,15 @@
+.submit_background{
+    min-height: calc(100vh - 180px);
+}
+.submit_sendData{
+    display: flex;
+    justify-content: center;
+    background-color: rgba(245, 220, 172, 0.838);
+}
+.submit_sendData_btn{
+    width: 100px;
+    height: 40px;
+    margin: 20px;
+    background-color: rgb(255, 127, 127);
+    cursor: pointer;
+}
