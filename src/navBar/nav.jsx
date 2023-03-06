@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-// import useState from "react-usestateref";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -125,6 +124,12 @@ function Nav() {
         });
     }
   }
+
+  // 重新導向
+  const goHome = () => {
+    window.location.assign('https://collectown-2629a.web.app/');
+  };
+
   // 登出功能
   function signout() {
     signOut(auth)
@@ -135,15 +140,15 @@ function Nav() {
       .catch((error) => {
         console.log(error.code);
       });
+    goHome();
   }
 
-  // {styles.}
   return (
     <>
       <div className={styles.nav}>
-        <a href="../" className={styles.logo_a}>
+        <div className={styles.logo_a} onClick={()=>goHome()} onKeyDown={()=>goHome()}>
           <div className={styles.logo} />
-        </a>
+        </div>
         <div className={styles.space} />
         {logged1 && (
           <>

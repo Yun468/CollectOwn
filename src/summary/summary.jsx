@@ -11,6 +11,7 @@ function Summary() {
   const { docUrl } = useParams();
   const { uid } = useParams();
   const [formUrl, setFormUrl] = useState(true);
+  const [delWindow, setDelWindow] = useState(false);
 
   const choose = (e) => {
     const btns = document.querySelectorAll('.switch');
@@ -31,8 +32,9 @@ function Summary() {
 
   // 刪除表單
   const deleteQ = () => {
-    console.log(docUrl);
     deleteDoc(doc(db, uid, docUrl));
+    setDelWindow(false);
+    navigate('/');
   };
 
   return (
@@ -88,13 +90,42 @@ function Summary() {
               <button
                 type="button"
                 className={styles.del_Q}
-                onClick={(() => deleteQ())}
-                onKeyDown={(() => deleteQ())}
+                onClick={(() => setDelWindow(true))}
+                onKeyDown={(() => setDelWindow(true))}
               >
                 刪除表單
               </button>
             </div>
           </div>
+          { delWindow === true && (
+            <div className={styles.del_box} id="del_box">
+              <div className={styles.del_window}>
+                <div className={styles.del_window_text}>
+                  確定要刪除表單嗎？
+                </div>
+                <div className={styles.del_window_btn_container}>
+                  <button
+                    type="button"
+                    className={styles.del_window_btn1}
+                    aria-label="reject"
+                    onClick={(() => setDelWindow(false))}
+                    onKeyDown={(() => setDelWindow(false))}
+                  >
+                    再想想
+                  </button>
+                  <button
+                    type="button"
+                    className={styles.del_window_btn2}
+                    aria-label="agree"
+                    onClick={(() => deleteQ())}
+                    onKeyDown={(() => deleteQ())}
+                  >
+                    確定
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
       ) : (

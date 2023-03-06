@@ -13,6 +13,7 @@ function AddQPage() {
   const [textField, setTextField] = useState('');
   const [editedField, setEditedField] = useState(false);
   const date = (+new Date()).toString();
+  const [dragging, setDragging] = useState(false);
 
   // Form title
   const FormTitle = {

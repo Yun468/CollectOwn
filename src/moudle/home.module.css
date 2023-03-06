@@ -27,7 +27,7 @@ time, mark, audio, video {
 }
 .entText{
     background-image: url("../picture/home.png");
-    background-size:60%;
+    background-size:55%;
     background-repeat: no-repeat;
     background-position:right top;
     display: flex;

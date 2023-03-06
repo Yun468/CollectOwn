@@ -3,7 +3,6 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { getDoc, setDoc, doc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import styles from '../moudle/submit.module.css';
-// import styles from '../moudle/addQPage.module.css';
 
 function Submit() {
   const { docUrl } = useParams();
