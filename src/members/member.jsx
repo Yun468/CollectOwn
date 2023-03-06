@@ -1,6 +1,6 @@
-import './members.css';
 import React, { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import styles from '../moudle/members.module.css';
 
 function Member() {
   const [name, setName] = useState('');
@@ -19,21 +19,19 @@ function Member() {
   }, []);
   return (
     <div>
-      <div className="title">會員資料</div>
-      <div className="sticker">用戶頭像</div>
-      <div className="info">
+      <div className={styles.title}>會員資料</div>
+      <div className={styles.info}>
         用戶姓名 :
         {name}
       </div>
-      <div className="info">
+      <div className={styles.info}>
         用戶帳號 :
         {email}
       </div>
-      <div className="info">
+      <div className={styles.info}>
         用戶帳號ID :
         {uid}
       </div>
-      <div className="info">修改密碼</div>
     </div>
   );
 }

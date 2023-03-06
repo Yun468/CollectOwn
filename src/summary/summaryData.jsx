@@ -1,4 +1,3 @@
-import '../moudle/summary.css';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
@@ -6,6 +5,7 @@ import {
 } from 'firebase/firestore';
 import Chart from 'react-apexcharts';
 import { db } from '../firebaseConfig';
+import styles from '../moudle/summary.module.css';
 
 // List頁的組件
 function SummaryData() {
@@ -55,7 +55,6 @@ function SummaryData() {
     };
     setPieSeries((oldlist) => [...oldlist, item1]); // pieP = 資料 [{item1},{}...]
     setPielabels((oldlist) => [...oldlist, item2]); // pieL = 資料 [{item2},{}...]
-
   };
 
   // ----------------------------------------------------------------------------------------------
@@ -111,66 +110,61 @@ function SummaryData() {
 
   // ---------------------------------------------------------------------------------------------
 
-  const changeChart = (type, fieldId) => {
-    const chartContainerId = `chart${fieldId}`;
-    const chartContainer = document.getElementById(chartContainerId);
-    console.log(chartContainer);
-    console.log(type);
+  const changeChart = (type, fieldId, target) => { // type = chart 類型
+    const donutId = `chart${fieldId}donut`;
+    const barId = `chart${fieldId}bar`;
+    const donut = document.getElementById(donutId);
+    const bar = document.getElementById(barId);
+    if (type === 'donut') {
+      donut.classList.remove(`${styles.sumData_qReply_chart}`);
+      bar.classList.add(`${styles.sumData_qReply_chart}`);
+      target.classList.remove(`${styles.sumData_qReply_select_bar}`);
+    } else if (type === 'bar') {
+      donut.classList.add(`${styles.sumData_qReply_chart}`);
+      bar.classList.remove(`${styles.sumData_qReply_chart}`);
+      target.classList.add(`${styles.sumData_qReply_select_bar}`);
+    }
   };
-
   // -------------------------------------------------------------------
   return (
-    <div>
+    <div className={styles.sumData_box}>
       {dataExist ? (
         <>
           {fieldContent.map((field) => (
-            <div key={field.id} className="sumData_qContainer">
-              <div className="sumData_qTitle">{field.title}</div>
-              <div id={field.id} className="sumData_qReply">
+            <div key={field.id} className={styles.sumData_qContainer}>
+              <div className={styles.sumData_qTitle}>
+                <div className={styles.sumData_qTitle_order}>
+                  {`第 ${fieldContent.indexOf(field) + 1} 題`}
+                </div>
+                <div>
+                  {field.title}
+                </div>
+              </div>
+              <div id={field.id} className={styles.sumData_qReply}>
                 {field.type === 'short_answer'
-                  && field.reply.map((f) => <div className="sumData_qReply_item">{f}</div>)}
+                  && field.reply.map((f) => <div className={styles.sumData_qReply_item}>{f}</div>)}
                 {field.type === 'paragraph'
-                  && field.reply.map((f) => <div className="sumData_qReply_item">{f}</div>)}
+                  && field.reply.map((f) => <div className={styles.sumData_qReply_item}>{f}</div>)}
                 {field.type === 'drop_down'
                   && field.arr.map(() => (
-                    <Chart
-                      type="donut"
-                      width="400"
-                      series={pieSeries.filter((f) => f.id === field.id)[0].prec}
-                      options={{
-                        labels: pielabels.filter((f) => f.id === field.id)[0].labe,
-                        title: {
-                          text: '圓餅圖/甜甜圈圖',
-                        },
-
-                        plotOptions: {
-                          pie: {
-                            donut: {
-                              labels: {
-                                show: true,
-                                total: {
-                                  show: true,
-                                  fontSize: 28,
-                                },
-                              },
-                            },
-                          },
-                        },
-                      }}
-                    />
-                  ))}
-                {field.type === 'multichoice'
-                  && field.arr.map(() => (
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      {/* <div id={`chart${field.id}`} /> */}
+                    <div>
+                      <select
+                        onChange={(e) => changeChart(e.target.value, field.id, e.target)}
+                        className={styles.sumData_qReply_select}
+                      >
+                        <option value="donut">圓餅圖/甜甜圈</option>
+                        <option value="bar">長條圖</option>
+                      </select>
                       <Chart
+                        id={`chart${field.id}donut`}
                         type="donut"
-                        width="400"
+                        width="100%"
+                        height="400"
                         series={pieSeries.filter((f) => f.id === field.id)[0].prec}
                         options={{
                           labels: pielabels.filter((f) => f.id === field.id)[0].labe,
                           title: {
-                            text: '圓餅圖/甜甜圈圖',
+                            text: '圓餅圖(甜甜圈型)',
                           },
 
                           plotOptions: {
@@ -180,54 +174,202 @@ function SummaryData() {
                                   show: true,
                                   total: {
                                     show: true,
-                                    fontSize: 28,
+                                    fontWeight: 600,
+                                    fontSize: 25,
+                                    color: '#000000',
                                   },
                                 },
                               },
                             },
                           },
+                          legend: {
+                            show: true,
+                            fontSize: '17px',
+                            fontFamily: 'Helvetica, Arial',
+                            fontWeight: 400,
+                            offsetX: -20,
+                          },
                         }}
                       />
-                      <select onChange={(e) => changeChart(e.target.value, field.id)}>
+                      <Chart
+                        className={styles.sumData_qReply_chart}
+                        id={`chart${field.id}bar`}
+                        type="bar"
+                        width="100%"
+                        height="400"
+                        series={[
+                          {
+                            name: 'bar chart',
+                            data: pieSeries.filter((f) => f.id === field.id)[0].prec,
+                          },
+                        ]}
+                        options={{
+                          title: {
+                            text: '長條圖',
+                          },
+                          xaxis: {
+                            categories: pielabels.filter((f) => f.id === field.id)[0].labe,
+                          },
+                        }}
+                      />
+                    </div>
+                  ))}
+                {field.type === 'multichoice'
+                  && field.arr.map(() => (
+                    <div>
+                      <select
+                        onChange={(e) => changeChart(e.target.value, field.id, e.target)}
+                        className={styles.sumData_qReply_select}
+                      >
                         <option value="donut">圓餅圖/甜甜圈</option>
                         <option value="bar">長條圖</option>
                       </select>
-                    </div>
-                  ))}
-                {field.type === 'more_than_one'
-                  && field.arr.map(() => (
-                    <Chart
-                      type="donut"
-                      width="400"
-                      series={pieSeries.filter((f) => f.id === field.id)[0].prec}
-                      options={{
-                        labels: pielabels.filter((f) => f.id === field.id)[0].labe,
-                        title: {
-                          text: '圓餅圖/甜甜圈圖',
-                        },
-
-                        plotOptions: {
-                          pie: {
-                            donut: {
-                              labels: {
-                                show: true,
-                                total: {
+                      <Chart
+                        id={`chart${field.id}donut`}
+                        type="donut"
+                        width="100%"
+                        height="400"
+                        series={pieSeries.filter((f) => f.id === field.id)[0].prec}
+                        options={{
+                          labels: pielabels.filter((f) => f.id === field.id)[0].labe,
+                          title: {
+                            text: '圓餅圖 ( 甜甜圈型 ) ',
+                            style: {
+                              fontSize: '15px',
+                              fontWeight: 600,
+                            },
+                          },
+                          plotOptions: {
+                            pie: {
+                              donut: {
+                                labels: {
                                   show: true,
-                                  fontSize: 28,
+                                  total: {
+                                    show: true,
+                                    fontWeight: 600,
+                                    fontSize: 25,
+                                    color: '#000000',
+                                  },
                                 },
                               },
                             },
                           },
-                        },
-                      }}
-                    />
+                          legend: {
+                            show: true,
+                            fontSize: '17px',
+                            fontFamily: 'Helvetica, Arial',
+                            fontWeight: 400,
+                            offsetX: -20,
+                          },
+                        }}
+                      />
+                      <Chart
+                        className={styles.sumData_qReply_chart}
+                        id={`chart${field.id}bar`}
+                        type="bar"
+                        width="100%"
+                        height="400"
+                        series={[
+                          {
+                            name: 'bar chart',
+                            data: pieSeries.filter((f) => f.id === field.id)[0].prec,
+                          },
+                        ]}
+                        options={{
+                          title: {
+                            text: '長條圖',
+                          },
+                          xaxis: {
+                            categories: pielabels.filter((f) => f.id === field.id)[0].labe,
+                          },
+                        }}
+                      />
+                    </div>
+                  ))}
+                {field.type === 'more_than_one'
+                  && field.arr.map(() => (
+                    <div>
+                      <select
+                        onChange={(e) => changeChart(e.target.value, field.id, e.target)}
+                        className={styles.sumData_qReply_select}
+                      >
+                        <option value="donut">圓餅圖/甜甜圈</option>
+                        <option value="bar">長條圖</option>
+                      </select>
+                      <Chart
+                        id={`chart${field.id}donut`}
+                        type="donut"
+                        width="100%"
+                        height="400"
+                        series={pieSeries.filter((f) => f.id === field.id)[0].prec}
+                        options={{
+                          labels: pielabels.filter((f) => f.id === field.id)[0].labe,
+                          title: {
+                            text: '圓餅圖 ( 甜甜圈型 ) ',
+                            style: {
+                              fontSize: '15px',
+                              fontWeight: 600,
+                            },
+                          },
+
+                          plotOptions: {
+                            pie: {
+                              donut: {
+                                labels: {
+                                  show: true,
+                                  total: {
+                                    show: true,
+                                    fontWeight: 600,
+                                    fontSize: 25,
+                                    color: '#000000',
+                                  },
+                                },
+                              },
+                            },
+                          },
+                          legend: {
+                            show: true,
+                            fontSize: '17px',
+                            fontFamily: 'Helvetica, Arial',
+                            fontWeight: 400,
+                            offsetX: -20,
+                          },
+                        }}
+                      />
+                      <Chart
+                        className={styles.sumData_qReply_chart}
+                        id={`chart${field.id}bar`}
+                        type="bar"
+                        width="100%"
+                        height="400"
+                        series={[
+                          {
+                            name: 'bar chart',
+                            data: pieSeries.filter((f) => f.id === field.id)[0].prec,
+                          },
+                        ]}
+                        options={{
+                          title: {
+                            text: '長條圖',
+                          },
+                          xaxis: {
+                            categories: pielabels.filter((f) => f.id === field.id)[0].labe,
+                          },
+                        }}
+                      />
+                    </div>
                   ))}
               </div>
             </div>
           ))}
         </>
       ) : (
-        <div className="summary_none">尚未有人填過表單，快去分享你的表單吧!</div>
+        <>
+          <div className={styles.summary_none}>尚未有人填過表單，快去分享你的表單吧!</div>
+          <div className={styles.summary_none_picture_container}>
+            <div className={styles.summary_none_picture} />
+          </div>
+        </>
       )}
     </div>
   );

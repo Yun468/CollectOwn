@@ -1,11 +1,9 @@
-import './members/members.css';
 import React, { useState, useEffect } from 'react';
 import {
   NavLink, Link, Outlet,
 } from 'react-router-dom';
-// import { collection } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-// import { db } from './firebaseConfig';
+import styles from './moudle/members.module.css';
 
 // List頁的組件
 function UserPage() {
@@ -21,13 +19,13 @@ function UserPage() {
   }, []);
 
   return (
-    <div className="container">
-      <div className="menu_bar">
+    <div className={styles.container}>
+      <div className={styles.menu_bar}>
         <NavLink to="/">
-          <div className="menu">會員資料</div>
+          <div className={styles.menu}>會員資料</div>
         </NavLink>
         <NavLink to="/questionnaire">
-          <div className="menu">我的問卷</div>
+          <div className={styles.menu}>我的問卷</div>
         </NavLink>
         <div className="menu_bottom">
           <div className="add_q_button">

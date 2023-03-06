@@ -58,17 +58,37 @@
     height: calc(100vh - 102px);
     /* padding: 15px; */
 }
+.box{
+    padding: 10px;
+    position: relative;
+}
 .title{
     margin: 10px;
     font-weight: 700;
     font-size: 35px;
     height: 50px;
 }
-.sticker{
-    width: 80px;
-    height: 80px;
-    border-radius: 5px;
-    background-color: cadetblue;
+.add_bt_con{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    position: absolute;
+    right: 30px;
+    top: 25px;
+    box-shadow: 0px 4px 9px #C4C4C4;
+}
+.add_bt_con:hover{
+    box-shadow: 0px 4px 9px #9C9C9C;
+}
+.add_bt{
+    background-image: url("../picture/plus.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 20px;
+    height: 20px;
 }
 .info{
     margin: 10px;
@@ -83,6 +103,7 @@
 .add_questionnaire_container{
     display: flex;
     flex-wrap: wrap;
+    padding: 0 24.5px;
 }
 .add_questionnaire{
     width: 180px;
@@ -91,7 +112,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 10px;
+    margin: 23.5px;
     font-size: 20px;
     background-color: rgb(254, 212, 158,0.8);
     border: 1px solid rgb(252, 190, 110);
@@ -104,4 +125,60 @@
     box-shadow: 0px 10px 10px -5px;
     color: gray;
     cursor: pointer;
+}
+.add_questionnaire_text{
+    color: black;
+    font-weight: 600;
+    height: 132px;
+    width: 182px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form{
+    display: flex;
+    justify-content: center;
+}
+.questionnaire{
+    width: 100%;
+    max-width: 1200px;
+}
+
+@media screen and (max-width:1250px) {
+    .questionnaire{
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+    .add_questionnaire_container{
+        width: 1000px;
+        padding: 0;
+    }
+    .add_questionnaire{
+        margin: 33px;
+    }
+}
+@media screen and (max-width:1011px){
+    .add_questionnaire_container{
+        width: 726px;
+    }
+    .add_questionnaire{
+        margin: 30px;
+    }
+}
+@media screen and (max-width:750px){
+    .add_questionnaire_container{
+        width: 486px;
+    }
+}
+@media screen and (max-width:600px){
+    .add_questionnaire_container{
+        width: 100%;
+        justify-content: center;
+    }
+    .add_questionnaire{
+        margin: 15px;
+    }
+
 }

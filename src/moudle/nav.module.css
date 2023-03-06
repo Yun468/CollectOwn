@@ -19,19 +19,22 @@ time, mark, audio, video {
     vertical-align: baseline;
 }
 .nav{
-    height: 50px;
     width: auto;
-    padding-top: 20px;
     display: flex;
+    background-color: #fdb86d
 }
 .logo{
-    width: 15%;
-    min-width: 100px;
-    margin: 0 0 0 10px;
+    width: 300px;
+    height: 70px;
+    margin: 0 0 0 15px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(98, 98, 236);
+    background-image: url("../picture/collectown.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
+    mix-blend-mode: multiply;
     cursor: pointer;
 }
 .space{
@@ -44,12 +47,10 @@ time, mark, audio, video {
     justify-content: center;
     align-items: center;
 }
-.loginBar{
-    border:2px #FFAC55 solid;
-}
 .loginBar:hover,.signUpBar:hover{
     cursor: pointer;
-    background-color:#FFAC55 ;
+    font-size: 25px;
+    font-weight: 650;
 }
 .login_background{
     display:grid;
@@ -68,11 +69,13 @@ time, mark, audio, video {
     flex-direction: column;
     align-items: center;
     background-color: #FFFFFF;
+    border-radius: 10px;
 }
 .logTop{
     width: 100%;
     height: 35px;
-    background-color: #34f7a9;
+    background-color: #fdb86d;
+    border-radius: 10px 10px 0 0;
 }
 .closeBar{
     width: 25px;
@@ -87,6 +90,8 @@ time, mark, audio, video {
     cursor: pointer;
 }
 .logtitle{
+    font-weight: 600;
+    font-size: 18px;
     margin-top: 20px;
 }
 .logInput{
@@ -94,16 +99,28 @@ time, mark, audio, video {
     height: 25px;
     margin: 15px 0 15px 0 ;
     padding: 5px;
+    border-radius: 5px;
+    border: 1px;
+    background-color: rgb(231, 242, 253);
 }
 .changeLogSign{
     text-align: center;
     margin: 30px 0 10px 0;
 }
 .changetext{
-    color: rgb(5, 220, 149);
+    color: rgb(31, 81, 243);
     cursor: pointer;
 }
 .changetext:hover{
     font-weight: 700;
 }
 
+@media screen and (max-width:600px) {
+    .logo{
+        width: 1500%;
+        height: 50px;
+    }
+    .logo_a{
+        width: 12px;
+    }
+}

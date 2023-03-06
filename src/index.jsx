@@ -1,5 +1,4 @@
 /* eslint-disable */
-import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -29,14 +28,10 @@ onAuthStateChanged(auth, (user) => {
     root.render(
       <BrowserRouter>
         <Routes>
-          <Route path="/*" element={<UserPage />}>
-            <Route index element={<Member />} />
-            <Route path="/*" element={<Member />} />
-            <Route path="questionnaire" element={<Questionnaire />} />
-            <Route path="questionnaire/:uid/:docUrl" element={<Summary />}>
-              <Route index element={<SummaryData />} />
-            </Route>
-          </Route>
+          <Route path="/*" element={<Questionnaire />} />
+          <Route path="questionnaire/:uid/:docUrl" element={<Summary />}>
+            <Route index element={<SummaryData />} />
+          </Route> 
           <Route path="addQ/:uid" element={<AddQPage />} />
           <Route path="addQ/:uid/:docUrl" element={<AddQDone />} />
           <Route path="submit/:uid/:docUrl" element={<Submit />} />

@@ -1,4 +1,3 @@
-import './nav.css';
 import React, { useState, useEffect } from 'react';
 // import useState from "react-usestateref";
 import {
@@ -9,6 +8,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
+import styles from '../moudle/nav.module.css';
 
 function Nav() {
   const [logged1, setLogged1] = useState(true);
@@ -137,20 +137,20 @@ function Nav() {
       });
   }
 
+  // {styles.}
   return (
     <>
-      <div className="nav">
-        <div className="logo">
-          <a href="newone-dcd8c.web.app"/>
-          CollectOwn
-        </div>
-        <div className="space" />
+      <div className={styles.nav}>
+        <a href="../" className={styles.logo_a}>
+          <div className={styles.logo} />
+        </a>
+        <div className={styles.space} />
         {logged1 && (
           <>
             <div
               role="button"
               tabIndex={0}
-              className="loginBar"
+              className={styles.loginBar}
               onClick={() => {
                 toLog();
                 setToggle(!toggle);
@@ -165,7 +165,7 @@ function Nav() {
             <div
               role="button"
               tabIndex={0}
-              className="signUpBar"
+              className={styles.signUpBar}
               onClick={() => {
                 toSign();
                 setToggle(!toggle);
@@ -180,30 +180,34 @@ function Nav() {
           </>
         )}
         {logged2 && (
-          <div className="loginBar" onClick={signout} onKeyDown={signout} role="button" tabIndex={0}>
+          <div className={styles.loginBar} onClick={signout} onKeyDown={signout} role="button" tabIndex={0}>
             登出
           </div>
         )}
       </div>
       {toggle && (
-        <div className="login_background">
+        <div className={styles.login_background}>
           {change1 && (
-            <div className="login">
-              <div className="logTop">
-                <div className="closeBar" onClick={() => setToggle(!toggle)} />
+            <div className={styles.login}>
+              <div className={styles.logTop}>
+                <div 
+                  className={styles.closeBar} 
+                  onClick={() => setToggle(!toggle)} 
+                  onKeyDown={() => setToggle(!toggle)}
+                />
               </div>
-              <div className="logtitle">登入帳號</div>
-              <input type="text" id="logEmail" placeholder="請輸入信箱帳號" className="logInput" />
+              <div className={styles.logtitle}>登入帳號</div>
+              <input type="text" id="logEmail" placeholder="請輸入信箱帳號" className={styles.logInput} />
               <input
                 type="password"
                 id="logPassword"
                 placeholder="請輸入密碼"
-                className="logInput"
+                className={styles.logInput}
               />
               <button onClick={login}>登入</button>
-              <div className="changeLogSign">
+              <div className={styles.changeLogSign}>
                 還沒有帳號？前往
-                <span className="changetext" onClick={() => changeLogSign()}>
+                <span className={styles.changetext} onClick={() => changeLogSign()}>
                   {' '}
                   註冊
                   {' '}
@@ -212,23 +216,23 @@ function Nav() {
             </div>
           )}
           {change2 && (
-            <div className="login">
-              <div className="logTop">
-                <div className="closeBar" onClick={() => setToggle(!toggle)} />
+            <div className={styles.login}>
+              <div className={styles.logTop}>
+                <div className={styles.closeBar} onClick={() => setToggle(!toggle)} />
               </div>
-              <div className="logtitle">註冊帳號</div>
-              <input type="text" id="user" placeholder="請輸入使用者姓名" className="logInput" />
-              <input type="text" id="signEmail" placeholder="請輸入信箱帳號" className="logInput" />
+              <div className={styles.logtitle}>註冊帳號</div>
+              <input type="text" id="user" placeholder="請輸入使用者姓名" className={styles.logInput} />
+              <input type="text" id="signEmail" placeholder="請輸入信箱帳號" className={styles.logInput} />
               <input
                 type="password"
                 id="signPassword"
                 placeholder="請輸入密碼"
-                className="logInput"
+                className={styles.logInput}
               />
               <button onClick={signup}>註冊</button>
-              <div className="changeLogSign">
+              <div className={styles.changeLogSign}>
                 已經有帳號了？前往
-                <span className="changetext" onClick={() => changeLogSign()}>
+                <span className={styles.changetext} onClick={() => changeLogSign()}>
                   {' '}
                   登入
                   {' '}

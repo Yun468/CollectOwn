@@ -1,13 +1,11 @@
-// import styles from './moudle/addQPage.module.css';
-import '../moudle/addQPage.css';
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { setDoc, doc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
+import styles from '../moudle/addQPage.module.css';
 
 function AddQPage() {
   const { uid } = useParams();
-  //   const [date, setDate] = useState((+new Date()).toString());
   const [formContent, setFormContent] = useState([]);
   const [onEditTitle, setOnEditTitle] = useState(false);
   const [onEditTitleLable, setOnEditTitleLable] = useState(false);
@@ -108,15 +106,15 @@ function AddQPage() {
   };
 
   return (
-    <>
-      <div className="addQ_background">
-        <div className="addQ_title">
+    <div className={styles.back}>
+      <div className={styles.background}>
+        <div className={styles.title}>
           {formTitleContent.map((formTitle) => (
             <div>
               {onEditTitle ? (
                 <input
                   key={formTitle.user}
-                  className="addQ_title_input"
+                  className={`${styles.title_input} ${styles.title_input_edit}`}
                   type="text"
                   value={formTitle.title}
                   onChange={(e) => editFormTitle(e.target.value)}
@@ -128,7 +126,7 @@ function AddQPage() {
                 <div
                   role="button"
                   tabIndex={0}
-                  className="addQ_title_input"
+                  className={styles.title_input}
                   onClick={() => {
                     setOnEditTitle(true);
                   }}
@@ -145,7 +143,7 @@ function AddQPage() {
             <div>
               {onEditTitleLable ? (
                 <textarea
-                  className="addQ_intr_input"
+                  className={`${styles.intr_input} ${styles.intr_input_edit}`}
                   rows={4}
                   value={formLabel.label}
                   onChange={(e) => editFormLable(e.target.value)}
@@ -157,7 +155,7 @@ function AddQPage() {
                 <div
                   role="button"
                   tabIndex={0}
-                  className="addQ_intr_input"
+                  className={styles.intr_input}
                   onClick={() => {
                     setOnEditTitleLable(true);
                   }}
@@ -172,20 +170,34 @@ function AddQPage() {
           ))}
         </div>
         <div
-          className="addQ_addpreset_btn"
+          className={styles.addpreset_btn}
           onClick={() => addQuestion()}
           onKeyDown={() => addQuestion()}
           role="button"
           tabIndex={0}
           aria-label="增加問題"
         />
-        <div className="addQ_preset_container">
+        <div className={styles.preset_container}>
           {formContent.map((field) => (
-            <div key={field.name} id={field.name} className="addQ_main">
-              <div className="addQ_preset">
-                <div className="addQ_preset_title">
+            // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+            <div
+              key={field.name}
+              id={field.name}
+              className={styles.main}
+              onClick={() => {
+                setOnEdit(true);
+                setEditedField(field.name);
+              }}
+              onKeyDown={() => {
+                setOnEdit(true);
+                setEditedField(field.name);
+              }}
+            >
+              <div className={styles.preset}>
+                <div className={styles.preset_title}>
                   {onEdit && editedField === field.name ? (
                     <textarea
+                      className={styles.main_edit}
                       rows={4}
                       cols={50}
                       value={field.label}
@@ -199,7 +211,7 @@ function AddQPage() {
                     <div
                       role="button"
                       tabIndex={0}
-                      className="addQ_preset_title_label"
+                      className={styles.preset_title_label}
                       onClick={() => {
                         setOnEdit(true);
                         setEditedField(field.name);
@@ -215,7 +227,7 @@ function AddQPage() {
                 </div>
                 <div>
                   <select
-                    className="addQ_preset_select"
+                    className={styles.preset_select}
                     onChange={(e) => editFieldType(field.name, e.target.value)}
                   >
                     <option value="short_answer">簡答題</option>
@@ -228,29 +240,30 @@ function AddQPage() {
               </div>
               <div>
                 {field.question_type === 'short_answer' && (
-                  <input type="text" className="addQ_preset_ans_text" placeholder={field.label} />
+                  <input type="text" className={styles.preset_ans_text} placeholder={field.label} />
                 )}
                 {field.question_type === 'paragraph' && (
-                  <textarea rows={4} className="addQ_preset_ans_text" placeholder={field.label} />
+                  <textarea rows={4} className={styles.preset_ans_text} placeholder={field.label} />
                 )}
                 {field.question_type === 'drop_down' && (
                   <div>
-                    <select className="addQ_preset_ans_select">
+                    <select className={styles.preset_ans_select}>
                       {field.list.map((item) => (
                         <option key={item} value={item}>
                           {item}
                         </option>
                       ))}
                     </select>
-                    建立選項
                     <div>
                       <input
                         id={`input${field.name}`}
+                        className={styles.preset_ans_select_inp}
                         type="text"
                         onChange={(e) => setTextField(e.target.value)}
-                        placeholder="輸入你的選項"
+                        placeholder="輸入內容，建立你的選項"
                       />
                       <button
+                        className={styles.preset_ans_select_btn}
                         type="button"
                         onClick={() => addFieldOption(field.name, textField)}
                         onKeyDown={() => addFieldOption(field.name, textField)}
@@ -263,11 +276,11 @@ function AddQPage() {
                 {field.question_type === 'multichoice' && (
                   <>
                     {field.list.map((item) => (
-                      <div className="addQ_radio">
-                        <input type="radio" name={`input${field.name}`} value={item} />
-                        <div>{item}</div>
+                      <div className={styles.radio}>
+                        <input className={styles.radio_cir} type="radio" name={`input${field.name}`} value={item} />
+                        <div className={styles.radio_opt}>{item}</div>
                         <div
-                          className="addQ_radio_del_btn"
+                          className={styles.radio_del_btn}
                           onClick={() => delRadio(field.name, item)}
                           aria-label="刪除"
                           role="button"
@@ -277,14 +290,16 @@ function AddQPage() {
                       </div>
                     ))}
                     <div>
-                      <input type="radio" disabled="true" />
+                      <input className={styles.radio_pre} type="radio" disabled="true" />
                       <input
                         id={`input${field.name}`}
+                        className={styles.preset_ans_select_inp}
                         type="text"
                         onChange={(e) => setTextField(e.target.value)}
                         placeholder="輸入內容來建立選項(單選題)"
                       />
                       <button
+                        className={styles.preset_ans_select_btn}
                         type="button"
                         onClick={() => addFieldOption(field.name, textField)}
                         onKeyDown={() => addFieldOption(field.name, textField)}
@@ -297,11 +312,11 @@ function AddQPage() {
                 {field.question_type === 'more_than_one' && (
                   <>
                     {field.list.map((item) => (
-                      <div className="addQ_checkbox">
-                        <input type="checkbox" name={`input${field.name}`} value={item} />
-                        <div>{item}</div>
+                      <div className={styles.checkbox}>
+                        <input className={styles.radio_cir} type="checkbox" name={`input${field.name}`} value={item} />
+                        <div className={styles.radio_opt}>{item}</div>
                         <div
-                          className="addQ_radio_del_btn"
+                          className={styles.radio_del_btn}
                           onClick={() => delRadio(field.name, item)}
                           aria-label="刪除"
                           role="button"
@@ -311,14 +326,16 @@ function AddQPage() {
                       </div>
                     ))}
                     <div>
-                      <input type="checkbox" disabled="true" />
+                      <input className={styles.radio_pre} type="checkbox" disabled="true" />
                       <input
                         id={`input${field.name}`}
+                        className={styles.preset_ans_select_inp}
                         type="text"
                         onChange={(e) => setTextField(e.target.value)}
                         placeholder="輸入內容來建立選項(多選題)"
                       />
                       <button
+                        className={styles.preset_ans_select_btn}
                         type="button"
                         onClick={() => addFieldOption(field.name, textField)}
                         onKeyDown={() => addFieldOption(field.name, textField)}
@@ -332,7 +349,7 @@ function AddQPage() {
               <div
                 role="button"
                 tabIndex={0}
-                className="addQ_del_btn"
+                className={styles.del_btn}
                 onClick={() => delQuestion(field.name)}
                 onKeyDown={() => delQuestion(field.name)}
                 aria-label="刪除題目"
@@ -340,74 +357,96 @@ function AddQPage() {
             </div>
           ))}
         </div>
-        <button type="button" className="addQ_creatQ_btn" onClick={() => creatUserFrom()}>
-          <Link to={date}>建立表單</Link>
-        </button>
+        <Link to={date}>
+          <button type="button" className={styles.creatQ_btn} onClick={() => creatUserFrom()}>
+            建立表單
+          </button>
+        </Link>
+        <div className={styles.description}>
+          編輯方式：
+          <li>表單標題：雙擊文字標題（預設為未命名表單）</li>
+          <li>增加題目：點擊 「＋」 符號</li>
+          <li>變更題型：使用題目中右上角的選單更動</li>
+          <li>刪除題目：使用題目中左下角的刪除圖示</li>
+        </div>
       </div>
       {/* -------------------------------- 以下是表單預覽 -----------------------------*/}
-      <div className="addQ_background addQ_preview" id="addQ_preview">
-        <div className="addQ_title">
+      <div className={`${styles.background} ${styles.preview}`} id="addQ_preview">
+        <div className={styles.title}>
           {formTitleContent.map((formTitle) => (
-            <div className="addQ_title_input">{formTitle.title}</div>
+            <div className={styles.title_input}>{formTitle.title}</div>
           ))}
           {formLabelContent.map((formLabel) => (
-            <div className="addQ_intr_input">{formLabel.label}</div>
+            <div className={styles.intr_input}>{formLabel.label}</div>
           ))}
         </div>
-        <div className="addQ_preset_container">
+        <div className={styles.preset_container}>
           {formContent.map((field) => (
-            <div key={field.name} id={field.name} className="addQ_main">
-              <div className="addQ_preset">
-                <div className="addQ_preset_title">
-                  <div className="addQ_preset_title_label">{field.label}</div>
+            // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+            <div
+              key={field.name}
+              id={field.name}
+              className={`${styles.main} addQ_main`}
+              onClick={() => {
+                setOnEdit(true);
+                setEditedField(field.name);
+              }}
+              onKeyDown={() => {
+                setOnEdit(true);
+                setEditedField(field.name);
+              }}
+            >
+              <div className={styles.preset}>
+                <div className={styles.preset_title}>
+                  <div
+                    className={`${styles.preset_title_label} addQ_preset_title_label`}
+                  >
+                    {field.label}
+                  </div>
                 </div>
               </div>
-              {field.question_type === 'short_answer' && (
-                <div id={`${field.name}short_answer`}>
-                  <input type="text" className="addQ_preset_ans_text" placeholder={field.label} />
-                </div>
-              )}
-              {field.question_type === 'paragraph' && (
-                <div id={`${field.name}paragraph`}>
-                  <textarea rows={4} className="addQ_preset_ans_text" placeholder={field.label} />
-                </div>
-              )}
-              {field.question_type === 'drop_down' && (
-                <div id={`${field.name}drop_down`}>
-                  <select className="addQ_preset_ans_select">
+              <div id={`${field.name}${field.question_type}`}>
+                {field.question_type === 'short_answer' && (
+                  <input type="text" className={styles.preset_ans_text} placeholder={field.label} />
+                )}
+                {field.question_type === 'paragraph' && (
+                  <textarea rows={4} className={styles.preset_ans_text} placeholder={field.label} />
+                )}
+                {field.question_type === 'drop_down' && (
+                  <select className={styles.preset_ans_select}>
                     {field.list.map((item) => (
                       <option key={item} value={item}>
                         {item}
                       </option>
                     ))}
                   </select>
-                </div>
-              )}
-              {field.question_type === 'multichoice' && (
-                <div id={`${field.name}multichoice`}>
-                  {field.list.map((item) => (
-                    <div className="addQ_radio">
-                      <input type="radio" name={`input${field.name}`} value={item} />
-                      <div>{item}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-              {field.question_type === 'more_than_one' && (
-                <div id={`${field.name}more_than_one`}>
-                  {field.list.map((item) => (
-                    <div className="addQ_checkbox">
-                      <input type="checkbox" name={`input${field.name}`} value={item} />
-                      <div>{item}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
+                )}
+                {field.question_type === 'multichoice' && (
+                  <>
+                    {field.list.map((item) => (
+                      <div className={styles.radio}>
+                        <input className={styles.radio_cir} type="radio" name={`input${field.name}`} value={item} />
+                        <div className={styles.radio_opt}>{item}</div>
+                      </div>
+                    ))}
+                  </>
+                )}
+                {field.question_type === 'more_than_one' && (
+                  <>
+                    {field.list.map((item) => (
+                      <div className={styles.checkbox}>
+                        <input className={styles.radio_cir} type="checkbox" name={`input${field.name}`} value={item} />
+                        <div className={styles.radio_opt}>{item}</div>
+                      </div>
+                    ))}
+                  </>
+                )}
+              </div>
             </div>
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 export default AddQPage;

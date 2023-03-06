@@ -1,8 +1,9 @@
-import '../moudle/submit.css';
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { getDoc, setDoc, doc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
+import styles from '../moudle/submit.module.css';
+// import styles from '../moudle/addQPage.module.css';
 
 function Submit() {
   const { docUrl } = useParams();
@@ -15,7 +16,7 @@ function Submit() {
     getDoc(doc(db, uid, docUrl))
       .then((result) => {
         const data = result.data();
-        const main = data.html.replace('addQ_preview', 'submit_background');
+        const main = data.html.replace('preview', 'submit_background');
         setField(main);
       })
       .catch(() => {
@@ -278,14 +279,14 @@ function Submit() {
   };
   // "multichoice","more_than_one"
   return (
-    <>
+    <div className={styles.submit_body}>
       <div dangerouslySetInnerHTML={{ __html: field }} />
-      <div className="submit_sendData">
-        <button className="submit_sendData_btn" onClick={() => sendData()} type="button">
+      <div className={styles.submit_sendData}>
+        <button className={styles.submit_sendData_btn} onClick={() => sendData()} type="button">
           送出表單
         </button>
       </div>
-    </>
+    </div>
   );
 }
 

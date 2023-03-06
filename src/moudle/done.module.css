@@ -1,0 +1,26 @@
+.done_background{
+    height: calc(100vh - 70px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(245, 220, 172, 0.838);
+}
+.done_url{
+    margin: 50px 0;
+    overflow-wrap: 'break-word';
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.done_url_drop{
+    display: inline;
+}
+
+@media screen and (max-width:700px) {
+    .done_url_drop{
+        display: block;
+    }
+}
+
+
